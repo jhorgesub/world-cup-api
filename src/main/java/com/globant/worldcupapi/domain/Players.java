@@ -1,5 +1,7 @@
 package com.globant.worldcupapi.domain;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -27,7 +29,9 @@ public class Players {
     @NotNull(message = "Birthday cannot be null")
     private LocalDate birthday;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "team_id")
     private Teams team;
 
     public Players() {

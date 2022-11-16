@@ -1,5 +1,8 @@
 package com.globant.worldcupapi.domain;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.HashSet;
@@ -31,17 +34,20 @@ public class Teams {
     @NotBlank
     private String dt;
 
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Players> players;
+    @OneToMany(mappedBy = "team")
+    @JsonIgnore
+    private Set<Players> players = new HashSet<>();
 
     public Teams() {
     }
 
-    public Teams(String country, String confederation, Integer cantPlayers, String dt) {
+    public Teams(Long id, String country, String confederation, Integer cantPlayers, String dt, Set<Players> players) {
+        this.id = id;
         this.country = country;
         this.confederation = confederation;
         this.cantPlayers = cantPlayers;
         this.dt = dt;
+        this.players = players;
     }
 
     public Long getId() {
@@ -92,4 +98,7 @@ public class Teams {
         this.players = players;
     }
 
+    public void addPlayer(Players player) {
+        this.players = players;
+    }
 }

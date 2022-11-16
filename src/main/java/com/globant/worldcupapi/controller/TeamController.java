@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/teams")
@@ -21,14 +19,14 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
+    @Autowired
+    private PlayerRepository playerRepository;
+    @Autowired
+    private TeamRepository teamRepository;
+
     @GetMapping()
     public List<Teams> getTeams() {
         return teamService.getTeams();
-    }
-
-    @PostMapping()
-    public ResponseEntity<?> saveTeams(@RequestBody Teams team) {
-        return new ResponseEntity<>(this.teamService.saveTeams(team), HttpStatus.CREATED);
     }
 
     @GetMapping("/getTeam")
@@ -36,7 +34,21 @@ public class TeamController {
         return teamService.findByCountry(country);
     }
 
+    @PostMapping()
+    public ResponseEntity<?> saveTeams(@RequestBody Teams team) {
+        return new ResponseEntity<>(this.teamService.saveTeams(team), HttpStatus.CREATED);
+    }
 
+    @PostMapping("/addTeam")
+    public Teams saveTeam(@RequestBody Teams team) {
+        return teamService.saveTeams(team);
+    }
 
-
+    @PutMapping("{idTeam}/players/{idPlayer}")
+    public Players addPlayerToTeam (@PathVariable Long idTeam, @PathVariable Long idPlayer) {
+        Players player = playerRepository.findById(idPlayer).get();
+        Teams team = teamRepository.findById(idTeam).get();
+        team.addPlayer(player);
+        return playerRepository.save(player);
+    }
 }

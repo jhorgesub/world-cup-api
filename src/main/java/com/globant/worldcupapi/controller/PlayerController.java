@@ -32,10 +32,10 @@ public class PlayerController {
         return new ResponseEntity<>(this.playerService.savePlayers(player), HttpStatus.CREATED);
     }
 
-    @PostMapping("{idTeams}/players/{idPlayers}")
-    public Teams addTeamToPlayer (@RequestBody Teams teams, @PathVariable Long idTeams, @PathVariable Long idPlayers) {
-        Players player = playerRepository.findById(idPlayers).get();
-        Teams team = teamRepository.findById(idTeams).get();
+    @PutMapping("{idPlayer}/teams/{idTeam}")
+    public Teams addTeamToPlayer (@PathVariable Long idTeam, @PathVariable Long idPlayer) {
+        Players player = playerRepository.findById(idPlayer).get();
+        Teams team = teamRepository.findById(idTeam).get();
         player.addTeam(team);
         return teamRepository.save(team);
     }

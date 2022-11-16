@@ -21,7 +21,6 @@ public class TeamService {
         return teamRepository.save(team);
     }
 
-
     public Teams findByCountry(String country) {
         return teamRepository.findByCountry(country);
     }
