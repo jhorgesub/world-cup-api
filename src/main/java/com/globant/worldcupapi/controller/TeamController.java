@@ -1,7 +1,7 @@
 package com.globant.worldcupapi.controller;
 
-import com.globant.worldcupapi.domain.Players;
-import com.globant.worldcupapi.domain.Teams;
+import com.globant.worldcupapi.domain.Player;
+import com.globant.worldcupapi.domain.Team;
 import com.globant.worldcupapi.repository.PlayerRepository;
 import com.globant.worldcupapi.repository.TeamRepository;
 import com.globant.worldcupapi.services.TeamService;
@@ -18,37 +18,36 @@ public class TeamController {
 
     @Autowired
     private TeamService teamService;
-
-    @Autowired
-    private PlayerRepository playerRepository;
     @Autowired
     private TeamRepository teamRepository;
 
+    @Autowired
+    private PlayerRepository playerRepository;
+
     @GetMapping()
-    public List<Teams> getTeams() {
+    public List<Team> getTeams() {
         return teamService.getTeams();
     }
 
     @GetMapping("/getTeam")
-    public Teams getTeam(String country) {
-        return teamService.findByCountry(country);
+    public Team getTeam(String team) {
+        return teamService.findByTeam(team);
     }
 
     @PostMapping()
-    public ResponseEntity<?> saveTeams(@RequestBody Teams team) {
-        return new ResponseEntity<>(this.teamService.saveTeams(team), HttpStatus.CREATED);
+    public ResponseEntity<?> saveTeams(@RequestBody Team team) {
+        return new ResponseEntity<>(this.teamService.saveSeleccion(team), HttpStatus.CREATED);
     }
 
-    @PostMapping("/addTeam")
-    public Teams saveTeam(@RequestBody Teams team) {
-        return teamService.saveTeams(team);
+    @PostMapping("/{idTeam}/player")
+    public Team createTeam(@RequestBody List<Player> idPlayer, @PathVariable Long idTeam) {
+        Team team = teamRepository.findById(idTeam).orElse(null);
+        return teamRepository.save(team);
     }
 
-    @PutMapping("{idTeam}/players/{idPlayer}")
-    public Players addPlayerToTeam (@PathVariable Long idTeam, @PathVariable Long idPlayer) {
-        Players player = playerRepository.findById(idPlayer).get();
-        Teams team = teamRepository.findById(idTeam).get();
-        team.addPlayer(player);
-        return playerRepository.save(player);
+    @DeleteMapping("deleteTeam/{idTeam}")
+    public void deleteTeam(@PathVariable Long idTeam) {
+        teamRepository.deleteById(idTeam);
     }
+
 }

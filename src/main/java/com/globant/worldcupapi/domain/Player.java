@@ -1,21 +1,18 @@
 package com.globant.worldcupapi.domain;
 
-import net.minidev.json.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 @Entity
-public class Players {
+public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "player_id")
     private Long id;
 
     @NotNull(message = "Name cannot be null")
@@ -30,14 +27,13 @@ public class Players {
     private LocalDate birthday;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "team_id")
-    private Teams team;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Team team;
 
-    public Players() {
+    public Player() {
     }
 
-    public Players(Long id, String name, String position, LocalDate birthday, Teams team) {
+    public Player(Long id, String name, String position, LocalDate birthday, Team team) {
         this.id = id;
         this.name = name;
         this.position = position;
@@ -77,15 +73,15 @@ public class Players {
         this.birthday = birthday;
     }
 
-    public Teams getTeam() {
+    public Team getTeam() {
         return team;
     }
 
-    public void setTeam(Teams team) {
+    public void setTeam(Team team) {
         this.team = team;
     }
 
-    public void addTeam(Teams team) {
+    public void addTeam(Team team) {
         this.team = team;
     }
 }
