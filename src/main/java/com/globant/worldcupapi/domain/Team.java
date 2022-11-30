@@ -28,20 +28,18 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private List<Player> players = new ArrayList<>();
 
-    /*@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Match> match;
-
-    @OneToMany(mappedBy = "team")
-    private List<Result> results = new ArrayList<>();*/
+    @ManyToMany(mappedBy = "team")
+    private List<MatchRequest> match;
 
     public Team() {
     }
 
-    public Team(String team, String confederation, String dt, List<Player> players) {
+    public Team(String team, String confederation, String dt, List<Player> players, List<MatchRequest> match) {
         this.team = team;
         this.confederation = confederation;
         this.dt = dt;
         this.players = players;
+        this.match = match;
     }
 
     public Long getId() {
@@ -82,5 +80,13 @@ public class Team {
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+
+    public List<MatchRequest> getMatch() {
+        return match;
+    }
+
+    public void setMatch(List<MatchRequest> match) {
+        this.match = match;
     }
 }

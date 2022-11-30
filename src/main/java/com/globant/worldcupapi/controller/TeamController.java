@@ -2,7 +2,6 @@ package com.globant.worldcupapi.controller;
 
 import com.globant.worldcupapi.domain.Player;
 import com.globant.worldcupapi.domain.Team;
-import com.globant.worldcupapi.repository.PlayerRepository;
 import com.globant.worldcupapi.repository.TeamRepository;
 import com.globant.worldcupapi.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/teams")
@@ -21,17 +21,25 @@ public class TeamController {
     @Autowired
     private TeamRepository teamRepository;
 
-    @Autowired
-    private PlayerRepository playerRepository;
 
     @GetMapping()
     public List<Team> getTeams() {
         return teamService.getTeams();
     }
 
-    @GetMapping("/getTeam")
-    public Team getTeam(String team) {
-        return teamService.findByTeam(team);
+    @GetMapping("/getTeamByName")
+    public Team getTeamByName(String team) {
+        return teamService.findTeamByTeam(team);
+    }
+
+    @GetMapping("/{idTeam}")
+    public ResponseEntity<?> getTeamById(@PathVariable Long idTeam) {
+        Optional<Team> team = teamRepository.findTeamById(idTeam);
+        if(team.isPresent()){
+            return new ResponseEntity<>(team.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Selección no encontrada", HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping()

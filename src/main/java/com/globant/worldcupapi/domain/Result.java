@@ -17,25 +17,21 @@ public class Result {
 
     private Integer goals2;
 
-    private Boolean draw;
+    private String result;
 
-    /*@ManyToOne(fetch = FetchType.EAGER)
-    private Team team;
-
-    @OneToOne
+    /*@OneToOne(mappedBy = "result")
     @JoinColumn(name = "id_match")
-    private Match match;*/
+    private MatchRequest match;*/
 
     public Result() {
     }
 
-    public Result(String team1, String team2, Integer goals1, Integer goals2, Boolean draw) {
+    public Result(String team1, String team2, Integer goals1, Integer goals2,String result) {
         this.team1 = team1;
         this.team2 = team2;
         this.goals1 = goals1;
         this.goals2 = goals2;
-        this.draw = draw;
-
+        this.result = result;
     }
 
     public Long getId() {
@@ -78,12 +74,11 @@ public class Result {
         this.goals2 = goals2;
     }
 
-    public Boolean getDraw() {
-        return draw;
+    public String getResult() {
+        return result;
     }
 
-    public void setDraw(Boolean draw) {
-        this.draw = draw;
+    public void setResult(String result) {
+        this.result = result;
     }
-
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeamService {
@@ -21,9 +22,15 @@ public class TeamService {
       return (List<Team>) teamRepository.findAll();
     }
 
-    public Team findByTeam(String team) {
-        return teamRepository.findByTeam(team);
+    public Team findTeamByTeam(String team) {
+        return teamRepository.findTeamByTeam(team);
     }
+
+    public Team findTeamById(Long idTeam){
+        Optional<Team> team = teamRepository.findTeamById(idTeam);
+        return team.orElse(null);
+    }
+
 
     public String saveSeleccion(Team team) {
         List<Player> players = team.getPlayers();
@@ -38,4 +45,5 @@ public class TeamService {
             return "La seleccion debe tener entre 1 y 3 jugadores";
         }
     }
+
 }
