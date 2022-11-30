@@ -10,11 +10,8 @@ public class Result {
     private Long id;
 
     private String team1;
-
-    private String team2;
-
     private Integer goals1;
-
+    private String team2;
     private Integer goals2;
 
     private String result;
@@ -26,10 +23,10 @@ public class Result {
     public Result() {
     }
 
-    public Result(String team1, String team2, Integer goals1, Integer goals2,String result) {
+    public Result(String team1, Integer goals1, String team2, Integer goals2,String result) {
         this.team1 = team1;
-        this.team2 = team2;
         this.goals1 = goals1;
+        this.team2 = team2;
         this.goals2 = goals2;
         this.result = result;
     }

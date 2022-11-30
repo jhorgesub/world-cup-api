@@ -51,11 +51,11 @@ public class MatchRequestController {
         if (team1.isPresent() && team2.isPresent()){
             if (! match.getIdTeam1().equals(match.getIdTeam2())){
                 if (goals1 > goals2) {
-                    result = new Result(team1.get().getTeam(), team2.get().getTeam(), goals1, goals2, "Ganó " + team1.get().getTeam());
+                    result = new Result(team1.get().getTeam(), goals1, team2.get().getTeam(), goals2, "Ganó " + team1.get().getTeam());
                 } else if (goals1 < goals2) {
-                    result = new Result(team1.get().getTeam(), team2.get().getTeam(), goals1, goals2, "Ganó " + team2.get().getTeam());
+                    result = new Result(team1.get().getTeam(), goals1, team2.get().getTeam(), goals2, "Ganó " + team2.get().getTeam());
                 } else {
-                    result = new Result(team1.get().getTeam(), team2.get().getTeam(), goals1, goals2, "Empate");
+                    result = new Result(team1.get().getTeam(), goals1, team2.get().getTeam(), goals2, "Empate");
                 }
                 matchRequestRepository.save(match);
                 resultRepository.save(result);
