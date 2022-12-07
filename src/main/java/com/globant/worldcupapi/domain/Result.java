@@ -13,7 +13,6 @@ public class Result {
     private Integer goals1;
     private String team2;
     private Integer goals2;
-
     private String result;
 
     /*@OneToOne(mappedBy = "result")

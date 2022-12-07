@@ -23,6 +23,7 @@ public class Team {
 
     @NotNull(message = "DT cannot be null")
     @NotBlank
+    @Column(name = "DT")
     private String dt;
 
     @OneToMany(mappedBy = "team")
@@ -34,7 +35,8 @@ public class Team {
     public Team() {
     }
 
-    public Team(String team, String confederation, String dt, List<Player> players, List<MatchRequest> match) {
+    public Team(Long id, String team, String confederation, String dt, List<Player> players, List<MatchRequest> match) {
+        this.id = id;
         this.team = team;
         this.confederation = confederation;
         this.dt = dt;
