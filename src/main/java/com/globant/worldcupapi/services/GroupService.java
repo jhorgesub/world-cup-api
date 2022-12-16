@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class GroupService {
@@ -31,18 +32,20 @@ public class GroupService {
         if(groups.size() < 6) {
             List<Team> teams = teamService.getTeams();
             GroupT groupSaved = groupRepository.save(group);
-            char letter = 'A';
+            int num = (int) ((Math.random() * 3) + 'A');
+            char letter = (char) num;
             groupSaved.setLetter(letter);
             groupSaved.setPoints(0);
-            groupSaved.setTeam("Argentina");
+            groupSaved.setTeam(teams.get(0).getTeam());
+            int i = 0;
                 for (GroupT groupt:groups){
                     while(groupt.getLetter() == letter) {
-                        int num = (int) ((Math.random() * 3) + 'A');
+                        num = (int) ((Math.random() * 3) + 'A');
                         letter = (char) num;
                     }
                     groupSaved.setLetter(letter);
-                    int i = 0;
-                    while(groupSaved.getTeam() == teams.get(i).getTeam()){
+
+                    while(Objects.equals(groupSaved.getTeam(), teams.get(i).getTeam())){
                         i++;
                     }
                     groupSaved.setTeam(teams.get(i).getTeam());
