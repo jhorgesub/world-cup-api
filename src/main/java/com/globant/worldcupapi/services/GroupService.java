@@ -1,59 +1,56 @@
 package com.globant.worldcupapi.services;
 
 import com.globant.worldcupapi.domain.GroupT;
-import com.globant.worldcupapi.domain.MatchRequest;
 import com.globant.worldcupapi.domain.Team;
 import com.globant.worldcupapi.repository.GroupRepository;
 import com.globant.worldcupapi.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class GroupService {
 
     @Autowired
     private GroupRepository groupRepository;
-
-    @Autowired TeamRepository teamRepository;
-
+    @Autowired
+    private TeamRepository teamRepository;
     @Autowired
     private TeamService teamService;
-
-    @Autowired
-    private RestTemplate restTemplate;
-
 
     public List<GroupT> getGroups() {
         return (List<GroupT>) groupRepository.findAll();
     }
 
-    public GroupT saveGroup(GroupT group){
-        Random random = new Random();
-        String letters = "ABCDEFGH";
-        int randomInt = random.nextInt(letters.length());
-        for (int i = 1; i <= 8; i++){
-            group.setLetter(letters.charAt(1));
+    public ResponseEntity<?> createGroup(GroupT group){
+        List<GroupT> groups = getGroups();
+        if(groups.size() < 6) {
+            List<Team> teams = teamService.getTeams();
+            GroupT groupSaved = groupRepository.save(group);
+            char letter = 'A';
+            groupSaved.setLetter(letter);
+            groupSaved.setPoints(0);
+            groupSaved.setTeam("Argentina");
+                for (GroupT groupt:groups){
+                    while(groupt.getLetter() == letter) {
+                        int num = (int) ((Math.random() * 3) + 'A');
+                        letter = (char) num;
+                    }
+                    groupSaved.setLetter(letter);
+                    int i = 0;
+                    while(groupSaved.getTeam() == teams.get(i).getTeam()){
+                        i++;
+                    }
+                    groupSaved.setTeam(teams.get(i).getTeam());
+                }
+                return new ResponseEntity<>(groupRepository.save(groupSaved),HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Ya alcanzó el máximo de selecciones posibles a agregar al mundial", HttpStatus.BAD_REQUEST);
         }
-        return groupRepository.save(group);
-    }
-    public String simulateGroup(List<Team> teams, List<GroupT> group) {
-
-
-        for (int i = 1 ; i<=8; i++){
-            for (int j = 1;j<=4; j++){
-                group.get(j).setId(teams.get(i).getId());
-                group.get(j).setTeam(teams.get(i).getTeam());
-                group.get(j).setPoints(1);
-            }
-        }
-        return "OK";
     }
 
 }

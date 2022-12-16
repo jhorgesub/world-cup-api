@@ -34,7 +34,7 @@ public class TeamController {
 
     @GetMapping("/{idTeam}")
     public ResponseEntity<?> getTeamById(@PathVariable Long idTeam) {
-        Optional<Team> team = teamRepository.findTeamById(idTeam);
+        Optional<Team> team = Optional.ofNullable(teamService.findTeamById(idTeam));
         if(team.isPresent()){
             return new ResponseEntity<>(team.get(), HttpStatus.OK);
         } else {

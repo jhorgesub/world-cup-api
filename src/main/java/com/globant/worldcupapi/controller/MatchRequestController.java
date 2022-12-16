@@ -1,8 +1,7 @@
 package com.globant.worldcupapi.controller;
 
+import com.globant.worldcupapi.domain.GroupT;
 import com.globant.worldcupapi.domain.MatchRequest;
-import com.globant.worldcupapi.domain.PositionsTable;
-import com.globant.worldcupapi.domain.Team;
 import com.globant.worldcupapi.repository.MatchRequestRepository;
 import com.globant.worldcupapi.repository.ResultRepository;
 import com.globant.worldcupapi.repository.TeamRepository;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/matches")
@@ -40,8 +38,8 @@ public class MatchRequestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveMatch(@RequestBody MatchRequest match, PositionsTable positionsTable) {
-        return matchRequestService.simulateMatch(match, positionsTable);
-
+    public ResponseEntity<?> saveMatch(@RequestBody MatchRequest match, GroupT group) {
+        return matchRequestService.simulateMatch(match, group);
     }
+
 }

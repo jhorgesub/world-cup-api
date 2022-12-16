@@ -1,14 +1,13 @@
 package com.globant.worldcupapi.controller;
 
 import com.globant.worldcupapi.domain.GroupT;
-import com.globant.worldcupapi.domain.Team;
 import com.globant.worldcupapi.repository.GroupRepository;
 import com.globant.worldcupapi.repository.TeamRepository;
 import com.globant.worldcupapi.services.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,14 +29,9 @@ public class GroupController {
         return groupService.getGroups();
     }
 
-    /*@GetMapping("/simulator")
-    public List<GroupT> simulateGroups(){
-        return this.groupService.saveGroup();
-    }*/
-
-    @PostMapping()
-    public GroupT saveGroup(@RequestBody GroupT group){
-        return this.groupService.saveGroup(group);
+    @PostMapping
+    public ResponseEntity<?> saveGroups(GroupT group){
+        return this.groupService.createGroup(group);
     }
 
 }

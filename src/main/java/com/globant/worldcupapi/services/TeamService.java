@@ -31,10 +31,9 @@ public class TeamService {
         return team.orElse(null);
     }
 
-
     public String saveSeleccion(Team team) {
         List<Player> players = team.getPlayers();
-        if(players.size() >=1 && players.size() <= 3) {
+        if(players.size() >= 1 && players.size() <= 3) {
             Team teamSaved = teamRepository.save(team);
             for(Player player:players) {
                 playerService.savePlayers(player);

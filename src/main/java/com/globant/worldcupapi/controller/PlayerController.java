@@ -31,7 +31,7 @@ public class PlayerController {
 
     @GetMapping("/getPlayer")
     public Player getPlayer(String name) {
-        return playerRepository.findByName(name);
+        return playerService.findByName(name);
     }
 
     @PostMapping()

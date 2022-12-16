@@ -14,6 +14,7 @@ public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
+
     public List<Player> getPlayers() {
         return (List<Player>) playerRepository.findAll();
     }
@@ -25,7 +26,6 @@ public class PlayerService {
     public Player findByName(String name) {
         return playerRepository.findByName(name);
     }
-
     public Player addPlayerToTeam(Player player, Team team) {
         player.setTeam(team);
         return playerRepository.save(player);
