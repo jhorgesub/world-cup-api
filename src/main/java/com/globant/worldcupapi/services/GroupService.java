@@ -50,7 +50,8 @@ public class GroupService {
                     }
                     groupSaved.setTeam(teams.get(i).getTeam());
                 }
-                return new ResponseEntity<>(groupRepository.save(groupSaved),HttpStatus.CREATED);
+                groupRepository.save(groupSaved);
+                return new ResponseEntity<>(group.getTeam() + " agregado al Grupo " + group.getLetter(),HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("Ya alcanzó el máximo de selecciones posibles a agregar al mundial", HttpStatus.BAD_REQUEST);
         }

@@ -38,8 +38,8 @@ public class MatchRequestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveMatch(@RequestBody MatchRequest match, GroupT group) {
-        return matchRequestService.simulateMatch(match, group);
+    public ResponseEntity<?> saveMatch(@RequestBody MatchRequest match) {
+        return matchRequestService.simulateMatch(match);
     }
 
 }
