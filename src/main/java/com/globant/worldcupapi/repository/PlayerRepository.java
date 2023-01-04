@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlayerRepository extends CrudRepository<Player,Long> {
     Player findByName(String name);
+
+    void deletePlayerById(Long player1);
 }

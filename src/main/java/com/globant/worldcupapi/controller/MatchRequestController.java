@@ -1,6 +1,5 @@
 package com.globant.worldcupapi.controller;
 
-import com.globant.worldcupapi.domain.GroupT;
 import com.globant.worldcupapi.domain.MatchRequest;
 import com.globant.worldcupapi.repository.MatchRequestRepository;
 import com.globant.worldcupapi.repository.ResultRepository;

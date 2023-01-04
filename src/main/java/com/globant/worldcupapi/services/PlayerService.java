@@ -3,6 +3,7 @@ package com.globant.worldcupapi.services;
 import com.globant.worldcupapi.domain.Player;
 import com.globant.worldcupapi.domain.Team;
 import com.globant.worldcupapi.repository.PlayerRepository;
+import com.globant.worldcupapi.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
+    @Autowired
+    private TeamRepository teamRepository;
 
     public List<Player> getPlayers() {
         return (List<Player>) playerRepository.findAll();

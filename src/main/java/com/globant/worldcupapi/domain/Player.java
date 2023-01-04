@@ -1,7 +1,6 @@
 package com.globant.worldcupapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -81,7 +80,4 @@ public class Player {
         this.team = team;
     }
 
-    public void addTeam(Team team) {
-        this.team = team;
-    }
 }

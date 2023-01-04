@@ -44,11 +44,12 @@ public class PlayerController {
         playerRepository.deleteById(idPlayer);
     }
 
+
     @PutMapping("/{idPlayer}/teams/{idTeam}")
     public Player addTeamToPlayer (@PathVariable Long idPlayer, @PathVariable Long idTeam ) {
         Player player = playerRepository.findById(idPlayer).get();
         Team team = teamRepository.findById(idTeam).get();
-        return playerRepository.save(player);
+        return playerService.addPlayerToTeam(player,team);
     }
 
 }

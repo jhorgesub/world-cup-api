@@ -58,4 +58,11 @@ public class TeamController {
         teamRepository.deleteById(idTeam);
     }
 
+    @DeleteMapping("{idTeam}/deleteplayer/{idPlayer}")
+    public void deletePlayerFromTeam(@PathVariable Long idTeam, @PathVariable Long idPlayer) {
+        teamService.deletePlayerFromTeamById(idTeam,idPlayer);
+    }
+
+
+
 }

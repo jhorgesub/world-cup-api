@@ -33,16 +33,30 @@ public class MatchRequestService {
         return (List<MatchRequest>) matchRequestRepository.findAll();
     }
 
-    public void updateTable(String team, int goals1, int goals2){
+    public void updateTable(String team1, String team2, int goals1, int goals2){
         List<GroupT> groups = groupService.getGroups();
+        int goals = 0;
         for (GroupT group:groups) {
-            if (team.equals(group.getTeam())) {
+            if (goals1 == goals2){
+                group.setPoints(group.getPoints() + 1);
+                group.setGoals(group.getGoals() + goals1);
+            }
+
+
+
+            /*if (team1.equals(group.getTeam())) {
+                    group.setGoals(goals + group.getGoals());
                 if (goals1 == goals2) {
                     group.setPoints(group.getPoints() + 1);
+                    group.setGoals(group.getGoals() + goals1);
+                } else if (goals1 > goals2) {
+                    group.setPoints(group.getPoints() + 3);
+                    group.setGoals(group.getGoals() + goals1);
                 } else {
                     group.setPoints(group.getPoints() + 3);
+                    group.setGoals(group.getGoals() + goals2);
                 }
-            }
+            }*/
         }
     }
 
@@ -57,14 +71,14 @@ public class MatchRequestService {
             if (! match.getIdTeam1().equals(match.getIdTeam2())){
                 if (goals1 > goals2) {
                     result = new Result(team1.get().getTeam(), goals1, team2.get().getTeam(), goals2, "Ganó " + team1.get().getTeam());
-                    updateTable(team1.get().getTeam(),goals1,goals2);
+                    updateTable(team1.get().getTeam(),team2.get().getTeam(),goals1,goals2);
                 } else if (goals1 < goals2) {
                     result = new Result(team1.get().getTeam(), goals1, team2.get().getTeam(), goals2, "Ganó " + team2.get().getTeam());
-                    updateTable(team2.get().getTeam(),goals1,goals2);
+                    updateTable(team1.get().getTeam(),team2.get().getTeam(),goals1,goals2);
                 } else {
                     result = new Result(team1.get().getTeam(), goals1, team2.get().getTeam(), goals2, "Empate");
-                    updateTable(team1.get().getTeam(),goals1,goals2);
-                    updateTable(team2.get().getTeam(),goals1,goals2);
+                    updateTable(team1.get().getTeam(),team2.get().getTeam(),goals1,goals2);
+                    //updateTable(team2.get().getTeam(),goals1,goals2);
                 }
                 matchRequestRepository.save(match);
                 resultRepository.save(result);
